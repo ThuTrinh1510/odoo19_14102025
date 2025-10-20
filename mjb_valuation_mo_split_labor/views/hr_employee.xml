@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mjb_view_employee_form_inherit_cost_hours" model="ir.ui.view">
+        <field name="name">mjb.view.employee.form.inherit.hr.employee.hourly.wage</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_hourly_cost.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="///div[@name='hourly_cost']" position="after">
+                <field name="x_use_employee_cost_in_manufacturing"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_form_inherit_unrealized" model="ir.ui.view">
+        <field name="name">account.account.form.inherit.unrealized</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="x_show_in_unrealized_gl_rp" invisible="account_type not in ['asset_receivable','asset_cash','asset_current','asset_non_current','asset_prepayments','asset_fixed','liability_payable','liability_credit_card','liability_current','liability_non_current']"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_tree_inherit_unrealized" model="ir.ui.view">
+        <field name="name">account.account.tree.inherit.unrealized</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reconcile']" position="after">
+                <field name="x_show_in_unrealized_gl_rp"  widget="boolean_toggle"  invisible="account_type not in ['asset_receivable','asset_cash','asset_current','asset_non_current','asset_prepayments','asset_fixed','liability_payable','liability_credit_card','liability_current','liability_non_current']"/>
+
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
