@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'MJB - Purchase Downpayment',
-    "version": "19.0.0.2",
+    "version": "19.0.0.1",
     'author': 'Majorbird',
     'website': 'https://majorbird.cn',
     'category': 'Inventory/Purchase',
@@ -12,7 +12,7 @@
         1. add downpayment on purchase\n
     ''',
     'depends': [
-        'base','purchase','account'
+        'base','purchase'
     ],
     'data': [
         'security/ir.model.access.csv',

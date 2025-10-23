@@ -13,4 +13,6 @@ _logger = logging.getLogger(__name__)
 class Company(models.Model):
     _inherit = 'res.company'
     
-    purchase_downpayment_account_id = fields.Many2one('account.account', string="Purchase Downpayment Account")
+    
+    purchase_downpayment_account_id = fields.Many2one(
+        'account.account', string="Purchase Downpayment Account")
