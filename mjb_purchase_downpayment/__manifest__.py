@@ -12,13 +12,13 @@
         1. add downpayment on purchase\n
     ''',
     'depends': [
-        'base','purchase'
+        'base','purchase','account'
     ],
     'data': [
         'security/ir.model.access.csv',
 
         'wizard/purchase_make_invoice_advance_views.xml',
-        'views/res_config_setting_views.xml',
+        # 'views/res_config_setting_views.xml',
         'views/purchase.xml',
     ],
     'css': [],
