@@ -18,7 +18,7 @@
         'security/ir.model.access.csv',
 
         'wizard/purchase_make_invoice_advance_views.xml',
-        # 'views/res_config_setting_views.xml',
+        'views/res_config_setting_views.xml',
         'views/purchase.xml',
     ],
     'css': [],
