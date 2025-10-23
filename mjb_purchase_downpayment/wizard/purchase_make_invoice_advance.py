@@ -166,10 +166,10 @@ class purchaseAdvancePaymentInv(models.TransientModel):
             values, accounts = self._prepare_down_payment_lines_values(order)
             down_payment_lines = purchaseOrderline.create(values)
 
+
             invoice = self.env['account.move'].sudo().create(
                 self._prepare_invoice_values(order, down_payment_lines)
             )
-
             # Ensure the invoice total is exactly the expected fixed amount.
             if self.advance_payment_method == 'fixed':
                 delta_amount = (invoice.amount_total - self.fixed_amount) * (1 if invoice.is_inbound() else -1)
@@ -204,7 +204,7 @@ class purchaseAdvancePaymentInv(models.TransientModel):
                         invoice.line_ids = line_commands
 
             # Unsudo the invoice after creation if not already sudoed
-            invoice = invoice.sudo(self.env.su)
+            journal_line_ids = invoice.sudo(self.env.su)
 
             poster = self.env.user._is_internal() and self.env.user.id or SUPERUSER_ID
             invoice.with_user(poster).message_post_with_source(
@@ -217,7 +217,6 @@ class purchaseAdvancePaymentInv(models.TransientModel):
             order.with_user(poster).message_post(
                 body=_("%s has been created", invoice._get_html_link(title=title)),
             )
-
             return invoice
 
     def _prepare_down_payment_section_values(self, order):
@@ -337,16 +336,21 @@ class purchaseAdvancePaymentInv(models.TransientModel):
 
     def _prepare_invoice_values(self, order, po_lines):
         self.ensure_one()
-        return {
+        res = {
             **order._prepare_invoice(),
             'invoice_line_ids': [
                 Command.create({
                     **line._prepare_account_move_line(),
-                    'quantity': 1.0  # Set the default quantity to 1
+                    'quantity': 1.0,  # Set the default quantity to 1
+                    'account_id': order.company_id.purchase_downpayment_account_id.id,
+                }) if order.company_id.purchase_downpayment_account_id else Command.create({
+                    **line._prepare_account_move_line(),
+                    'quantity': 1.0,  # Set the default quantity to 1
                 })
                 for line in po_lines
             ],
         }
+        return res
 
     def _get_down_payment_description(self, order):
         self.ensure_one()

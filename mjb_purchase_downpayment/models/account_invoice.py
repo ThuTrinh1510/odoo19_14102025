@@ -19,3 +19,18 @@ class AccountMove(models.Model):
                 WHERE id = %s""" % downpayment_line.id
                 self.env.cr.execute(query)
         return res
+    
+
+class AccountMoveLine(models.Model):
+    _inherit = 'account.move.line'
+
+
+    @api.depends('balance')
+    def _compute_debit_credit(self):
+        for line in self:
+            if not line.is_storno or line.purchase_order_id:
+                line.debit = line.balance if line.balance > 0.0 else 0.0
+                line.credit = -line.balance if line.balance < 0.0 else 0.0
+            else:
+                line.debit = line.balance if line.balance < 0.0 else 0.0
+                line.credit = -line.balance if line.balance > 0.0 else 0.0
