@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'MJB - Purchase Downpayment',
-    "version": "19.0.0.1",
+    "version": "19.0.0.2",
     'author': 'Majorbird',
     'website': 'https://majorbird.cn',
     'category': 'Inventory/Purchase',
